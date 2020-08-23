@@ -64,8 +64,8 @@ from sklearn.metrics import mean_squared_error as mse
 from sklearn.preprocessing import RobustScaler
 # ADDITIONAL LIBRARIES
 #import researchpy as rp
-import uszipcode
-from uszipcode import SearchEngine
+# import uszipcode
+# from uszipcode import SearchEngine
 
 # PLOTLY / CUFFLINKS for iplots
 import plotly
@@ -274,68 +274,68 @@ def timeMap(d, xcol='RegionName', ycol='MeanValue', zipcodes=None):
 
 # --------- ZIP_STATS() --------- #
 
-def zip_stats(zipcodes, 
-              minimum=0, maximum=5000000,
-              simple=True):
-    """
-    Lookup median home values for zipcodes or return zip codes of a min and max median home value
-    #TODO: add input options for city state county
-    #TODO: add input options for other keywords besides median home val
+# def zip_stats(zipcodes, 
+#               minimum=0, maximum=5000000,
+#               simple=True):
+#     """
+#     Lookup median home values for zipcodes or return zip codes of a min and max median home value
+#     #TODO: add input options for city state county
+#     #TODO: add input options for other keywords besides median home val
     
-    *Prerequisites: USZIPCODE() pypi package is a required dependency
+#     *Prerequisites: USZIPCODE() pypi package is a required dependency
     
-    **ARGS
-    zipcodes: dataframe or array of strings (zipcodes) 
-    > Example1: zipcodes=df[zipcode']
-    > Example2: zipcodes=['01267','90025']
+#     **ARGS
+#     zipcodes: dataframe or array of strings (zipcodes) 
+#     > Example1: zipcodes=df[zipcode']
+#     > Example2: zipcodes=['01267','90025']
     
-    minimum: integer for dollar amount min threshold (default is 0)
-    maximum: integer for dollar amount max threshold (default is 5000000, i.e. no maximum)
+#     minimum: integer for dollar amount min threshold (default is 0)
+#     maximum: integer for dollar amount max threshold (default is 5000000, i.e. no maximum)
     
-    **KWARGS
-    simple: default=True
-    > set simple_zipcode=False to use rich info database (will only apply once TODOs above are added)
-    """
-    # pypi package for retrieving information based on us zipcodes
-    import uszipcode
-    from uszipcode import SearchEngine
+#     **KWARGS
+#     simple: default=True
+#     > set simple_zipcode=False to use rich info database (will only apply once TODOs above are added)
+#     """
+#     # pypi package for retrieving information based on us zipcodes
+#     import uszipcode
+#     from uszipcode import SearchEngine
     
-    # set simple_zipcode=False to use rich info database
-    if simple:
-        search = SearchEngine(simple_zipcode=True)
-    else:
-        search = SearchEngine(simple_zipcode=False)
+#     # set simple_zipcode=False to use rich info database
+#     if simple:
+#         search = SearchEngine(simple_zipcode=True)
+#     else:
+#         search = SearchEngine(simple_zipcode=False)
         
-    # create empty dictionary 
-    dzip = {}
+#     # create empty dictionary 
+#     dzip = {}
 
-    # search pypi uszipcode library to retrieve data for each zipcode
-    for code in zipcodes:
-        z = search.by_zipcode(code)
-        dzip[code] = z.to_dict()
+#     # search pypi uszipcode library to retrieve data for each zipcode
+#     for code in zipcodes:
+#         z = search.by_zipcode(code)
+#         dzip[code] = z.to_dict()
     
-    keyword='median_home_value'
-    # # pull just the median home values from dataset and append to list
-    # create empty lists for keys and vals
-    keys = []
-    zips = []
+#     keyword='median_home_value'
+#     # # pull just the median home values from dataset and append to list
+#     # create empty lists for keys and vals
+#     keys = []
+#     zips = []
     
-    for index in dzip:
-        keys.append(dzip[index][keyword])
+#     for index in dzip:
+#         keys.append(dzip[index][keyword])
 
-    # put zipcodes in other list
-    for index in dzip:
-        zips.append(dzip[index]['zipcode'])
+#     # put zipcodes in other list
+#     for index in dzip:
+#         zips.append(dzip[index]['zipcode'])
         
-    # zip both lists into dictionary
-    zipkey = dict(zip(zips, keys))
+#     # zip both lists into dictionary
+#     zipkey = dict(zip(zips, keys))
 
-    zipvals = {}
+#     zipvals = {}
     
-    for k,v in zipkey.items():
-        if v > minimum and v < maximum:
-            zipvals[k]=v
-    return zipvals
+#     for k,v in zipkey.items():
+#         if v > minimum and v < maximum:
+#             zipvals[k]=v
+#     return zipvals
 
 
 """
