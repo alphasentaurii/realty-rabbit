@@ -387,4 +387,4 @@ def generated_figure_json(data):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True,host='127.0.0.1')
+    app.run_server(debug=True)
