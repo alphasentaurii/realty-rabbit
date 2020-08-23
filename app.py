@@ -37,19 +37,16 @@ df_preds = df_preds.drop('RegionID', axis=1)
 df_preds = spak.makeTime(df_preds, idx='DateTime')
 # df_preds = df_preds.loc[df_preds.index >= '2016-02-01'] 
 
-
 preds = pd.read_csv('data/pred_vs_actual.csv', parse_dates=True)
 preds = pd.DataFrame(preds)
 
 forecast = pd.read_csv('data/forecast.csv', parse_dates=True)
 forecast = pd.DataFrame(forecast)
 
-
 # Train Lines
 NY_Newhaven=pd.read_csv('data/newhaven.csv')
 NY_Harlem=pd.read_csv('data/harlem.csv')
 NY_Hudson=pd.read_csv('data/hudson.csv')
-
 
 # DICTIONARIES
 available_zipcodes = df['RegionName'].unique()
@@ -65,9 +62,9 @@ txd = spak.time_dict(d=NYC, xcol='RegionName', ycol='MeanValue')
 # FIGURES
 fig=go.Figure()
 for k,v in txd.items():
-    fig.add_trace(go.Line(x=preds['Month'].loc[preds['RegionName']==k], y=preds['MeanValue'].loc[preds['RegionName']==k], name=f'{k} actual', line_color='lightgrey'))
-    fig.add_trace(go.Line(x=preds['Month'].loc[preds['RegionName']==k], y=preds['predicted'].loc[preds['RegionName']==k], name=f'{k} pred', line_color='royalblue'))
-    fig.add_trace(go.Line(x=forecast['Month'].loc[forecast['RegionName']==k], y=forecast['predicted'].loc[forecast['RegionName']==k], name=f'{k} forecast', line_color='lightseagreen'))
+    fig.add_trace(go.scatter.Line(x=preds['Month'].loc[preds['RegionName']==k], y=preds['MeanValue'].loc[preds['RegionName']==k], name=f'{k} actual', line_color='lightgrey'))
+    fig.add_trace(go.scatter.Line(x=preds['Month'].loc[preds['RegionName']==k], y=preds['predicted'].loc[preds['RegionName']==k], name=f'{k} pred', line_color='royalblue'))
+    fig.add_trace(go.scatter.Line(x=forecast['Month'].loc[forecast['RegionName']==k], y=forecast['predicted'].loc[forecast['RegionName']==k], name=f'{k} forecast', line_color='lightseagreen'))
 
 #fig.add_trace(go.Line(x=NY['Month'], y=NY['MeanValue'], name='Actual', line_color='lightgrey'))
 #fig = px.scatter(preds, x=preds.index, y='predicted')
@@ -97,11 +94,10 @@ fig1 = go.Figure()
 #                   xaxis_rangeslider_visible=True)
 
 for k,v in txd.items():
-    fig1.add_trace(go.Line(x=NY['Month'].loc[NY['RegionName']==k], y=NY['MeanValue'].loc[NY['RegionName']==k], name=str(k)))
+    fig1.add_trace(go.scatter.Line(x=NY['Month'].loc[NY['RegionName']==k], y=NY['MeanValue'].loc[NY['RegionName']==k], name=str(k)))
 
 fig1.update_layout(title_text='Westchester County NY - Mean Home Values',
                   xaxis_rangeslider_visible=True)
-
 
 fig1.update_xaxes(
     rangeslider_visible=True,
