@@ -1,6 +1,6 @@
 Brotli==1.0.7
 click==7.1.2
-cufflinks==2.2.1
+cufflinks==0.17.3
 dash==1.14.0
 dash-core-components==1.10.2
 dash-html-components==1.0.3
