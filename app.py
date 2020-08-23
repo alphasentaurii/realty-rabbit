@@ -62,9 +62,9 @@ txd = spak.time_dict(d=NYC, xcol='RegionName', ycol='MeanValue')
 # FIGURES
 fig=go.Figure()
 for k,v in txd.items():
-    fig.add_trace(go.scatter.Line(x=preds['Month'].loc[preds['RegionName']==k], y=preds['MeanValue'].loc[preds['RegionName']==k], name=f'{k} actual', line_color='lightgrey'))
-    fig.add_trace(go.scatter.Line(x=preds['Month'].loc[preds['RegionName']==k], y=preds['predicted'].loc[preds['RegionName']==k], name=f'{k} pred', line_color='royalblue'))
-    fig.add_trace(go.scatter.Line(x=forecast['Month'].loc[forecast['RegionName']==k], y=forecast['predicted'].loc[forecast['RegionName']==k], name=f'{k} forecast', line_color='lightseagreen'))
+    fig.add_trace(go.scatter.Line(x=preds['Month'].loc[preds['RegionName']==k], y=preds['MeanValue'].loc[preds['RegionName']==k], name=f'{k} actual', color='lightgrey', dash='solid'))
+    fig.add_trace(go.scatter.Line(x=preds['Month'].loc[preds['RegionName']==k], y=preds['predicted'].loc[preds['RegionName']==k], name=f'{k} pred', color='royalblue', dash='solid'))
+    fig.add_trace(go.scatter.Line(x=forecast['Month'].loc[forecast['RegionName']==k], y=forecast['predicted'].loc[forecast['RegionName']==k], name=f'{k} forecast', color='lightseagreen', dash='solid'))
 
 #fig.add_trace(go.Line(x=NY['Month'], y=NY['MeanValue'], name='Actual', line_color='lightgrey'))
 #fig = px.scatter(preds, x=preds.index, y='predicted')
