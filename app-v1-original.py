@@ -20,6 +20,8 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
+server = app.server
+
 colors = {
     'background': '#ffffff',#'#111111', 
     'text': '#000000' #'#7FDBFF'
@@ -115,27 +117,29 @@ fig1.update_xaxes(
 # fig2 = preds.iplot(kind='bar', x=index, y='predicted', title='Time Series with Range Slider and Selectors', asFigure=True)
 
 
-#### FIG 3
+#### FIG 2
 
-fig3 = go.Figure()
-fig3.add_trace(go.Scatter(x=NY_Newhaven['DateTime'], y=NY_Newhaven['MeanValue'], name="NewHaven MeanValue",
+fig2 = go.Figure()
+fig2.add_trace(go.Scatter(x=NY_Newhaven['DateTime'], y=NY_Newhaven['MeanValue'], name="NewHaven MeanValue",
                          line_color='crimson'))
-fig3.add_trace(go.Scatter(x=NY_Harlem['DateTime'], y=NY_Harlem['MeanValue'], name="Harlem MeanValue",
+fig2.add_trace(go.Scatter(x=NY_Harlem['DateTime'], y=NY_Harlem['MeanValue'], name="Harlem MeanValue",
                          line_color='deepskyblue'))
-fig3.add_trace(go.Scatter(x=NY_Hudson['DateTime'], y=NY_Hudson['MeanValue'], name="Hudson MeanValue",
+fig2.add_trace(go.Scatter(x=NY_Hudson['DateTime'], y=NY_Hudson['MeanValue'], name="Hudson MeanValue",
                          line_color='lightgreen'))
-fig3.update_layout(title_text='MeanValues by Train Line',
+fig2.update_layout(title_text='MeanValues by Train Line',
                   xaxis_rangeslider_visible=True)
 
 
+
+#### FIG 3
 top5 = df.loc[(df['RegionName'] == 10708) | (df['RegionName']==10706) | (df['RegionName']==10803) | (df['RegionName']==10514) | (df['RegionName']==10605) ]
 top5_fc = forecast.loc[(forecast['RegionName'] ==10708) | (forecast['RegionName']==10706) | (forecast['RegionName'] ==10514) | (forecast['RegionName']==10605)]
 
-fig4 = go.Figure()
-fig4.add_trace(go.Scatter(x=top5['Month'], y=top5['MeanValue']))
+fig3 = go.Figure()
+fig3.add_trace(go.Scatter(x=top5['Month'], y=top5['MeanValue']))
 # px.scatter(top5, x='Month', y='MeanValue')
-fig4.add_trace(go.Scatter(x=top5_fc['Month'], y=top5_fc['predicted']))
-fig4.update_layout(title_text='Top 5 Zip Code Forecasts',
+fig3.add_trace(go.Scatter(x=top5_fc['Month'], y=top5_fc['predicted']))
+fig3.update_layout(title_text='Top 5 Zip Code Forecasts',
                   xaxis_rangeslider_visible=True)
 
 
@@ -226,12 +230,12 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, children=
 
     dcc.Graph(
         id='ts_trainlines',
-        figure=fig3
+        figure=fig2
     ),
 
     dcc.Graph(
         id='top5-zipcodes',
-        figure=fig4
+        figure=fig3
     ),
 
     generate_table(df_preds),
@@ -383,4 +387,4 @@ def generated_figure_json(data):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host='https://realty-rabbit.herokuapp.com/')
+    app.run_server(debug=True)

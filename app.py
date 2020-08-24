@@ -48,11 +48,16 @@ available_zipcodes = df['RegionName'].unique()
 # nyc: dict of dataframes for each zip code
 NYC, nyc, city_zip = spak.cityzip_dicts(df=df, col1='RegionName', col2='City')
 
-
 txd = spak.time_dict(d=NYC, xcol='RegionName', ycol='MeanValue')
 
+# Train Lines
+NY_Newhaven=pd.read_csv('data/newhaven.csv')
+NY_Harlem=pd.read_csv('data/harlem.csv')
+NY_Hudson=pd.read_csv('data/hudson.csv')
 
 # FIGURES
+
+# Fig
 fig=go.Figure()
 for k,v in txd.items():
     fig.add_trace(go.Scatter(x=preds['Month'].loc[preds['RegionName']==k], y=preds['MeanValue'].loc[preds['RegionName']==k], name=f'{k} actual', line_color='lightgrey'))
@@ -99,6 +104,18 @@ fig1.update_xaxes(
     )
 )
 
+#### FIG 2
+
+fig2 = go.Figure()
+fig2.add_trace(go.Scatter(x=NY_Newhaven['DateTime'], y=NY_Newhaven['MeanValue'], name="NewHaven MeanValue",
+                         line_color='crimson'))
+fig2.add_trace(go.Scatter(x=NY_Harlem['DateTime'], y=NY_Harlem['MeanValue'], name="Harlem MeanValue",
+                         line_color='deepskyblue'))
+fig2.add_trace(go.Scatter(x=NY_Hudson['DateTime'], y=NY_Hudson['MeanValue'], name="Hudson MeanValue",
+                         line_color='lightgreen'))
+fig2.update_layout(title_text='MeanValues by Train Line',
+                  xaxis_rangeslider_visible=True)
+
 
 
 app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
@@ -126,6 +143,11 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, children=
     dcc.Graph(
         id='ts',
         figure=fig1
+    ),
+    
+    dcc.Graph(
+        id='ts_trainlines',
+        figure=fig2
     )
  
 ])
