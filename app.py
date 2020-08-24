@@ -62,9 +62,9 @@ txd = spak.time_dict(d=NYC, xcol='RegionName', ycol='MeanValue')
 # FIGURES
 fig=go.Figure()
 for k,v in txd.items():
-    fig.add_trace(go.Scatter(x=preds['Month'].loc[preds['RegionName']==k], y=preds['MeanValue'].loc[preds['RegionName']==k], id=f'{k} actual', line_color='lightgrey'))
-    fig.add_trace(go.Scatter(x=preds['Month'].loc[preds['RegionName']==k], y=preds['predicted'].loc[preds['RegionName']==k], id=f'{k} pred', line_color='royalblue'))
-    fig.add_trace(go.Scatter(x=forecast['Month'].loc[forecast['RegionName']==k], y=forecast['predicted'].loc[forecast['RegionName']==k], id=f'{k} forecast', line_color='lightseagreen'))
+    fig.add_trace(go.Scatter(x=preds['Month'].loc[preds['RegionName']==k], y=preds['MeanValue'].loc[preds['RegionName']==k], name=f'{k} actual', line_color='lightgrey'))
+    fig.add_trace(go.Scatter(x=preds['Month'].loc[preds['RegionName']==k], y=preds['predicted'].loc[preds['RegionName']==k], name=f'{k} pred', line_color='royalblue'))
+    fig.add_trace(go.Scatter(x=forecast['Month'].loc[forecast['RegionName']==k], y=forecast['predicted'].loc[forecast['RegionName']==k], name=f'{k} forecast', line_color='lightseagreen'))
 
 #fig.add_trace(go.Line(x=NY['Month'], y=NY['MeanValue'], name='Actual', line_color='lightgrey'))
 #fig = px.scatter(preds, x=preds.index, y='predicted')
@@ -94,7 +94,7 @@ fig1 = go.Figure()
 #                   xaxis_rangeslider_visible=True)
 
 for k,v in txd.items():
-    fig1.add_trace(go.Scatter(x=NY['Month'].loc[NY['RegionName']==k], y=NY['MeanValue'].loc[NY['RegionName']==k], id=str(k)))
+    fig1.add_trace(go.Scatter(x=NY['Month'].loc[NY['RegionName']==k], y=NY['MeanValue'].loc[NY['RegionName']==k], name=str(k)))
 
 fig1.update_layout(title_text='Westchester County NY - Mean Home Values',
                   xaxis_rangeslider_visible=True)
